@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vadim-test-page
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: vadim-test
+      tier: page
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 100%
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: vadim-test
+        tier: page
+    spec:
+      containers:
+        - image: vadim98/vadim_test_page
+          imagePullPolicy: Always
+          name: vadim-test-application
+          ports:
+            - containerPort: 80
